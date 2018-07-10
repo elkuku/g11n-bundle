@@ -1,0 +1,83 @@
+{% extends '@WebProfiler/Profiler/layout.html.twig' %}
+
+{% block toolbar %}
+    {% set icon %}
+        {{ include('@WebProfiler/Icon/translation.svg') }}
+
+        {% if collector.untranslateds %}
+            <span class="sf-toolbar-value sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>
+        {% endif %}
+        <span class="sf-toolbar-value">{{ collector.translateds }}</span>
+
+    {% endset %}
+
+    {% set text %}
+        <div class="sf-toolbar-info-piece">
+            <b>Strings</b>
+            {% if collector.untranslateds %}
+                <span class="sf-toolbar-value sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>&nbsp;/&nbsp;
+            {% endif %}
+            <span class="sf-toolbar-value">{{ collector.translateds }}</span>
+        </div>
+    {% endset %}
+
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
+{% endblock %}
+
+{% block head %}
+    {{ parent() }}
+    <style>
+        tr.warn td {
+            background-color: #ffee89;
+        }
+    </style>
+{% endblock %}
+
+{% block menu %}
+    <span class="label">
+        <span class="icon">
+        {{ include('@WebProfiler/Icon/translation.svg') }}
+        </span>
+        <strong>G11n</strong>
+        {% if collector.untranslateds %}
+            &nbsp;<span class="sf-toolbar-value sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>
+        {% endif %}
+    </span>
+{% endblock %}
+
+{% block panel %}
+    <h2>Language Strings</h2>
+    <table>
+        <tr>
+            <th>Status</th>
+            <th>String</th>
+            <th>Args</th>
+        </tr>
+
+        {% for string in collector.strings %}
+            <tr{% if '-' == string.status %} class="warn"{% endif %}>
+                <td>{{ string.status }}</td>
+                <td>{{ string.string }}</td>
+                <td>{{ dump(string.args) }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Language Files</h2>
+
+    <table>
+        <tr>
+            {% for key, v in collector.events[0] %}
+                <th>{{ key }}</th>
+            {% endfor %}
+        </tr>
+
+        {% for file in collector.events %}
+            <tr>
+                {% for prop in file %}
+                    <td>{{ prop }}</td>
+                {% endfor %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

@@ -1,0 +1,27 @@
+services:
+  # Language loading
+  ElKuKu\G11nBundle\EventSubscriber\G11nSubscriber:
+    arguments: ['%kernel.project_dir%', 'en-GB']
+    tags: [kernel.event_subscriber]
+
+  # Twig extension
+  ElKuKu\G11nBundle\Twig\G11nExtension:
+    tags: [twig.extension]
+
+  # Debug bar
+  ElKuKu\G11nBundle\DataCollector\G11nCollector:
+    tags:
+    - name: data_collector
+      template: '@ElKuKuG11n/g11n-data-collector.html.twig'
+      id: 'g11n.collector'
+    public: false
+
+  #Console command templates
+  ElKuKu\G11nBundle\Command\MakeTemplatesCommand:
+    arguments: ["%kernel.project_dir%"]
+    tags: [console.command]
+
+  #Console command langfiles
+  ElKuKu\G11nBundle\Command\MakeLangfilesCommand:
+    arguments: ["%kernel.project_dir%"]
+    tags: [console.command]
