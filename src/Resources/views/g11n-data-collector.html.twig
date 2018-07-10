@@ -5,23 +5,34 @@
         {{ include('@WebProfiler/Icon/translation.svg') }}
 
         {% if collector.untranslateds %}
-            <span class="sf-toolbar-value sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>
+            <span class="sf-toolbar-status sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>
         {% endif %}
-        <span class="sf-toolbar-value">{{ collector.translateds }}</span>
+        {% if collector.translateds %}
+            <span class="sf-toolbar-value">{{ collector.translateds }}</span>
+        {% endif %}
 
     {% endset %}
 
     {% set text %}
-        <div class="sf-toolbar-info-piece">
-            <b>Strings</b>
+        {% if getLangDebug() %}
             {% if collector.untranslateds %}
-                <span class="sf-toolbar-value sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>&nbsp;/&nbsp;
+                <div class="sf-toolbar-info-piece">
+                    <b>Untranslated</b>
+                    <span class="sf-toolbar-status sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>
+                </div>
             {% endif %}
-            <span class="sf-toolbar-value">{{ collector.translateds }}</span>
-        </div>
+            <div class="sf-toolbar-info-piece">
+                <b>Translated</b>
+                <span class="sf-toolbar-status">{{ collector.translateds }}</span>
+            </div>
+        {% else %}
+            <div class="sf-toolbar-info-piece">
+                <b>Language Debug is disabled</b>
+            </div>
+        {% endif %}
     {% endset %}
 
-    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: true }) }}
+    {{ include('@WebProfiler/Profiler/toolbar_item.html.twig', { link: getLangDebug() }) }}
 {% endblock %}
 
 {% block head %}
@@ -34,50 +45,64 @@
 {% endblock %}
 
 {% block menu %}
-    <span class="label">
+    <span class="label{% if not getLangDebug() %} disabled{% endif %}">
         <span class="icon">
         {{ include('@WebProfiler/Icon/translation.svg') }}
         </span>
         <strong>G11n</strong>
         {% if collector.untranslateds %}
-            &nbsp;<span class="sf-toolbar-value sf-toolbar-status-yellow">{{ collector.untranslateds }}</span>
+            &nbsp;<span class="btn status-warning">{{ collector.untranslateds }}</span>
         {% endif %}
     </span>
 {% endblock %}
 
 {% block panel %}
     <h2>Language Strings</h2>
-    <table>
-        <tr>
-            <th>Status</th>
-            <th>String</th>
-            <th>Args</th>
-        </tr>
-
-        {% for string in collector.strings %}
-            <tr{% if '-' == string.status %} class="warn"{% endif %}>
-                <td>{{ string.status }}</td>
-                <td>{{ string.string }}</td>
-                <td>{{ dump(string.args) }}</td>
-            </tr>
-        {% endfor %}
-    </table>
-
-    <h2>Language Files</h2>
-
-    <table>
-        <tr>
-            {% for key, v in collector.events[0] %}
-                <th>{{ key }}</th>
-            {% endfor %}
-        </tr>
-
-        {% for file in collector.events %}
+    {% if getLangDebug() %}
+        <table>
+            <thead>
             <tr>
-                {% for prop in file %}
-                    <td>{{ prop }}</td>
+                <th>Status</th>
+                <th>String</th>
+                <th>Args</th>
+                <th>File</th>
+            </tr>
+            </thead>
+
+            {% for string in collector.strings %}
+                <tr{% if '-' == string.status %} class="warn"{% endif %}>
+                    <td>{{ string.status }}</td>
+                    <td>{{ string.string }}</td>
+                    <td>{{ dump(string.args) }}</td>
+                    <td>{{ replaceRootPath(string.file) ~ ':' ~ string.line }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+
+        <h2>Language Files</h2>
+
+        <table>
+            <thead>
+            <tr>
+                {% for key, v in collector.events[0] %}
+                    <th>{{ key }}</th>
                 {% endfor %}
             </tr>
-        {% endfor %}
-    </table>
+            </thead>
+
+            {% for file in collector.events %}
+                <tr>
+                    {% for key, prop in file %}
+                        {% if key in ['File', 'Cache'] %}
+                            <td>{{ replaceRootPath(prop) }}</td>
+                        {% else %}
+                            <td>{{ prop }}</td>
+                        {% endif %}
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="empty"><p>Language Debug is disabled</p></div>
+    {% endif %}
 {% endblock %}

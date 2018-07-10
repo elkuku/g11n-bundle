@@ -43,6 +43,8 @@ class G11nCollector extends DataCollector
 
             $s->status = $item->status;
             $s->string = $item->string;
+            $s->file = $item->file;
+            $s->line = $item->line;
 
             $args = $item->args;
 

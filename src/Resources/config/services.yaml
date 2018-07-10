@@ -6,6 +6,7 @@ services:
 
   # Twig extension
   ElKuKu\G11nBundle\Twig\G11nExtension:
+    arguments: ["%kernel.project_dir%"]
     tags: [twig.extension]
 
   # Debug bar

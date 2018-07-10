@@ -8,6 +8,13 @@ use Twig\TwigFunction;
 
 class G11nExtension extends AbstractExtension
 {
+    private $rootDir;
+
+    public function __construct(string $rootDir)
+    {
+        $this->rootDir = $rootDir;
+    }
+
     public function getFunctions(): array
     {
         return [
@@ -16,12 +23,13 @@ class G11nExtension extends AbstractExtension
             new TwigFunction('getLangDebug', [$this, 'getLangDebug']),
             new TwigFunction('getLangs', [$this, 'getLangs']),
             new TwigFunction('getCurrentLang', [$this, 'getCurrentLang']),
+            new TwigFunction('replaceRootPath', [$this, 'replaceRootPath']),
         ];
     }
 
-    public function getLangDebug()
+    public function getLangDebug(): bool
     {
-        return getenv('LANG_DEBUG');
+        return getenv('LANG_DEBUG') ? true : false;
     }
 
     public function getLangs(): array
@@ -29,8 +37,13 @@ class G11nExtension extends AbstractExtension
         return ['en-GB', 'de-DE'];
     }
 
-    public function getCurrentLang()
+    public function getCurrentLang(): string
     {
         return G11n::getCurrent();
+    }
+
+    public function replaceRootPath(string $path): string
+    {
+        return str_replace($this->rootDir, '...', $path);
     }
 }
