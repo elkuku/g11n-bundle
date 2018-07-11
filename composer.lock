@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "545f9d6a04e91b5cf308da9395a9bf01",
+    "content-hash": "7f8b3aa9269c5cc0af9ca74a20d04153",
     "packages": [
         {
             "name": "elkuku/g11n",
-            "version": "4.1",
+            "version": "5.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elkuku/g11n.git",
-                "reference": "e4292915fe389a34490af7e5c7d301081f550534"
+                "reference": "cfdab2d2445abd48d007b555e66f188822799483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elkuku/g11n/zipball/e4292915fe389a34490af7e5c7d301081f550534",
-                "reference": "e4292915fe389a34490af7e5c7d301081f550534",
+                "url": "https://api.github.com/repos/elkuku/g11n/zipball/cfdab2d2445abd48d007b555e66f188822799483",
+                "reference": "cfdab2d2445abd48d007b555e66f188822799483",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 }
             ],
             "description": "The g11n language library",
-            "time": "2018-07-07T17:26:30+00:00"
+            "time": "2018-07-11T15:03:16+00:00"
         },
         {
             "name": "elkuku/g11n-util",
