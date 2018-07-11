@@ -3,6 +3,7 @@
 namespace ElKuKu\G11nBundle\Twig;
 
 use ElKuKu\G11n\G11n;
+use ElKuKu\G11n\Support\ExtensionHelper;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -32,9 +33,9 @@ class G11nExtension extends AbstractExtension
         return getenv('LANG_DEBUG') ? true : false;
     }
 
-    public function getLangs(): array
+    public function getLangs(string $extension): array
     {
-        return ['en-GB', 'de-DE'];
+        return array_merge([G11n::getDefault()], ExtensionHelper::getLanguages($extension));
     }
 
     public function getCurrentLang(): string

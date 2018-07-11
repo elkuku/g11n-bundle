@@ -27,7 +27,7 @@ class G11nCollector extends DataCollector
 
     public function collect(Request $request, Response $response, \Exception $exception = null): void
     {
-        $items  = G11n::get('processedItems');
+        $items  = G11n::getProcessedItems();
         $events = [];
 
         foreach (G11n::getEvents() as $event) {
