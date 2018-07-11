@@ -46,11 +46,11 @@ class MakeLangfilesCommand extends Command
         $g11nUtil = new G11nUtil($output->getVerbosity());
 
         $languageFile = (new LanguageFileType())
-            ->setExtension('g11ntest')
-            ->setDomain('domain')
+            ->setExtension('default')
+            ->setDomain('default')
             ->setTemplatePath($this->rootDir.'/translations/template.pot');
 
-        ExtensionHelper::addDomainPath('domain', $this->rootDir.'/translations');
+        ExtensionHelper::setDomainPath($this->rootDir.'/translations');
 
         foreach ($langs as $lang) {
             $languageFile->setLang($lang);

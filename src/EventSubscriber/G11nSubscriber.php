@@ -51,13 +51,13 @@ class G11nSubscriber implements EventSubscriberInterface
 
         try {
             ExtensionHelper::setCacheDir($this->rootDir.'/var/cache');
-            ExtensionHelper::addDomainPath('default', $this->rootDir.'/translations');
+            ExtensionHelper::setDomainPath($this->rootDir.'/translations');
 
             if ($debug) {
                 ExtensionHelper::cleanCache();
             }
 
-            G11n::loadLanguage('g11ntest', 'default');
+            G11n::loadLanguage();
         } catch (G11nException $e) {
             echo $e->getMessage();
         }

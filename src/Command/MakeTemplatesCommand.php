@@ -52,7 +52,7 @@ class MakeTemplatesCommand extends Command
             $this->rootDir.'/templates',
             $this->rootDir.'/templates',
             $cacheDir.'/'.$extension,
-            [new G11nExtension()],
+            [new G11nExtension($this->rootDir)],
             true
         );
 
