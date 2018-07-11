@@ -17,7 +17,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
  */
 class MakeTemplatesCommand extends Command
 {
-    protected static $defaultName = 'make-templates';
+    protected static $defaultName = 'g11n:templates';
 
     private $rootDir;
 

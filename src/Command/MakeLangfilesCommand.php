@@ -13,7 +13,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class MakeLangfilesCommand extends Command
 {
-    protected static $defaultName = 'make-langfiles';
+    protected static $defaultName = 'g11n:langfiles';
 
     private $rootDir;
 
