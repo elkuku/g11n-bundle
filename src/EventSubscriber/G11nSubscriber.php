@@ -19,11 +19,13 @@ class G11nSubscriber implements EventSubscriberInterface
 {
     private $rootDir;
     private $defaultLang;
+    private $debug;
 
-    public function __construct(string $rootDir, string $defaultLang)
+    public function __construct(string $rootDir, string $defaultLang, bool $debug)
     {
         $this->rootDir     = $rootDir;
         $this->defaultLang = $defaultLang;
+        $this->debug = $debug;
     }
 
     public static function getSubscribedEvents(): array
@@ -43,17 +45,15 @@ class G11nSubscriber implements EventSubscriberInterface
             $lang = $request->getSession()->get('lang', $this->defaultLang);
         }
 
-        $debug = getenv('LANG_DEBUG');
-
         G11n::setCurrent($lang);
 
-        G11n::setDebug($debug);
+        G11n::setDebug($this->debug);
 
         try {
             ExtensionHelper::setCacheDir($this->rootDir.'/var/cache');
             ExtensionHelper::setDomainPath($this->rootDir.'/translations');
 
-            if ($debug) {
+            if ($this->debug) {
                 ExtensionHelper::cleanCache();
             }
 

@@ -30,12 +30,20 @@ class G11nExtension extends AbstractExtension
 
     public function getLangDebug(): bool
     {
-        return getenv('LANG_DEBUG') ? true : false;
+        return G11n::isDebug();
     }
 
     public function getLangs(string $extension = 'default'): array
     {
-        return array_merge([G11n::getDefault()], ExtensionHelper::getLanguages($extension));
+        $langs = [G11n::getDefault()];
+
+        try {
+            $languages = ExtensionHelper::getLanguages($extension);
+            $langs = array_merge($langs, $languages);
+        } catch (\Exception $exception) {
+        }
+
+        return $langs;
     }
 
     public function getCurrentLang(): string

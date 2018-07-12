@@ -1,7 +1,8 @@
 services:
   # Language loading
-  ElKuKu\G11nBundle\EventSubscriber\G11nSubscriber:
-    arguments: ['%kernel.project_dir%', 'en-GB']
+  elkuku_g11n_loader:
+    class: ElKuKu\G11nBundle\EventSubscriber\G11nSubscriber
+    arguments: ['%kernel.project_dir%', 'en-GB', 0]
     tags: [kernel.event_subscriber]
 
   # Twig extension
