@@ -46,6 +46,7 @@ class G11nSubscriber implements EventSubscriberInterface
         }
 
         G11n::setCurrent($lang);
+        G11n::setDefault($this->defaultLang);
 
         G11n::setDebug($this->debug);
 

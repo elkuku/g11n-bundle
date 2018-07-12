@@ -20,6 +20,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
+            ->variableNode('defaultLang')->defaultValue('en-GB')->end()
             ->booleanNode('debug')->defaultFalse()->end()
             ->end();
 

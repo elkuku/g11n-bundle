@@ -32,6 +32,7 @@ class ElKuKuG11nExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $definition = $container->getDefinition('elkuku_g11n_loader');
+        $definition->setArgument(1, $config['defaultLang']);
         $definition->setArgument(2, $config['debug']);
     }
 }

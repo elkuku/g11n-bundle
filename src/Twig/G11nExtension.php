@@ -39,7 +39,11 @@ class G11nExtension extends AbstractExtension
 
         try {
             $languages = ExtensionHelper::getLanguages($extension);
-            $langs = array_merge($langs, $languages);
+            foreach ($languages as $lang) {
+                if (false === \in_array($lang, $langs, true)) {
+                    $langs[] = $lang;
+                }
+            }
         } catch (\Exception $exception) {
         }
 
