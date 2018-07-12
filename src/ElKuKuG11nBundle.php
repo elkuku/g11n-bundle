@@ -15,8 +15,7 @@ class ElKuKuG11nBundle extends Bundle
 {
     public function getContainerExtension()
     {
-        if (null === $this->extension)
-        {
+        if (null === $this->extension) {
             $this->extension = new ElKuKuG11nExtension;
         }
 

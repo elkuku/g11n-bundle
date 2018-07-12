@@ -11,7 +11,7 @@ namespace ElKuKu\G11nBundle\Tests\Twig;
 use ElKuKu\G11nBundle\Twig\G11nExtension;
 use PHPUnit\Framework\TestCase;
 
-class G11nExtensionTest  extends TestCase
+class G11nExtensionTest extends TestCase
 {
     public function testThis()
     {
