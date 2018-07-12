@@ -5,5 +5,10 @@
          colors="true"
          bootstrap="./vendor/autoload.php"
 >
-    ... lines 9 - 26
+    <testsuites>
+        <testsuite name="Unit">
+            <directory>Tests</directory>
+        </testsuite>
+    </testsuites>
+
 </phpunit>
