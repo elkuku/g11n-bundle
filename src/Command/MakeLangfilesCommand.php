@@ -45,12 +45,16 @@ class MakeLangfilesCommand extends Command
 
         $g11nUtil = new G11nUtil($output->getVerbosity());
 
+        $translationsPath = $this->rootDir.'/translations';
+        $templatePath     = $translationsPath . '/template.pot';
+        $templateJsPath   = $translationsPath . '/template.js.pot';
+
         $languageFile = (new LanguageFileType())
             ->setExtension('default')
             ->setDomain('default')
-            ->setTemplatePath($this->rootDir.'/translations/template.pot');
+            ->setTemplatePath($templatePath);
 
-        ExtensionHelper::setDomainPath($this->rootDir.'/translations');
+        ExtensionHelper::setDomainPath($translationsPath);
 
         foreach ($langs as $lang) {
             $languageFile->setLang($lang);
@@ -58,12 +62,15 @@ class MakeLangfilesCommand extends Command
         }
 
         // Javascript
-        $languageFile->setTemplatePath($this->rootDir.'/translations/template.js.pot')
-            ->setExtension('default.js');
+        if (file_exists($templateJsPath)) {
+            $languageFile
+                ->setTemplatePath($templateJsPath)
+                ->setExtension('default.js');
 
-        foreach ($langs as $lang) {
-            $languageFile->setLang($lang);
-            $g11nUtil->processFiles($languageFile);
+            foreach ($langs as $lang) {
+                $languageFile->setLang($lang);
+                $g11nUtil->processFiles($languageFile);
+            }
         }
 
         $io->success('Language files created.');

@@ -74,14 +74,16 @@ class MakeTemplatesCommand extends Command
         );
 
         // Javascript
-        $template->setPaths([$this->rootDir . '/assets'])
-            ->setExtensionDir('js')
-            ->setType('js')
-            ->setTemplatePath($this->rootDir.'/translations/template.js.pot');
+        if (is_dir($this->rootDir . '/assets/js')) {
+            $template->setPaths([$this->rootDir.'/assets'])
+                ->setExtensionDir('js')
+                ->setType('js')
+                ->setTemplatePath($this->rootDir.'/translations/template.js.pot');
 
-        $g11nUtil->processTemplates($template);
+            $g11nUtil->processTemplates($template);
 
-        $this->replaceTemplate($template->templatePath, $this->rootDir);
+            $this->replaceTemplate($template->templatePath, $this->rootDir);
+        }
 
         $io->success('Templates created.');
     }
