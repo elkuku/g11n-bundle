@@ -20,7 +20,7 @@ services:
 
   #Console command templates
   ElKuKu\G11nBundle\Command\MakeTemplatesCommand:
-    arguments: ["%kernel.project_dir%"]
+    arguments: ["%kernel.project_dir%", '@twig']
     tags: [console.command]
 
   #Console command langfiles

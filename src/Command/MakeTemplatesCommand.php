@@ -2,7 +2,6 @@
 
 namespace ElKuKu\G11nBundle\Command;
 
-use ElKuKu\G11nBundle\Twig\G11nExtension;
 use ElKuKu\G11nUtil\G11nUtil;
 use ElKuKu\G11nUtil\Type\LanguageTemplateType;
 use League\Flysystem\Adapter\Local;
@@ -11,6 +10,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Twig\Environment;
 
 /**
  * Class MakeTemplatesCommand
@@ -20,10 +20,12 @@ class MakeTemplatesCommand extends Command
     protected static $defaultName = 'g11n:templates';
 
     private $rootDir;
+    private $twig;
 
-    public function __construct(string $rootDir)
+    public function __construct(string $rootDir, Environment $twig)
     {
         $this->rootDir = $rootDir;
+        $this->twig = $twig;
 
         parent::__construct();
     }
@@ -37,26 +39,22 @@ class MakeTemplatesCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $cacheDir  = $this->rootDir.'/var/cache/twig';
-        $extension = 'src';
+        $env = 'dev';
+        $cacheDir  = $this->rootDir.'/var/cache/' . $env . '/twig';
+        $extension = '';
+
 
         // Cleanup
-        (new Filesystem(new Local($this->rootDir.'/var/cache')))
-            ->deleteDir('twig');
+        (new Filesystem(new Local($this->rootDir.'/var/cache/' . $env)))
+           ->deleteDir('twig');
 
         $g11nUtil = new G11nUtil($output->getVerbosity());
 
         $template = new LanguageTemplateType();
 
-        $g11nUtil->makePhpFromTwig(
-            $this->rootDir.'/templates',
-            $this->rootDir.'/templates',
-            $cacheDir.'/'.$extension,
-            [new G11nExtension($this->rootDir)],
-            true
-        );
+        $g11nUtil->makePhpFromTwig($this->twig, $this->rootDir.'/templates', true);
 
-        $paths = [$this->rootDir, $cacheDir];
+        $paths = [$this->rootDir . '/src', $cacheDir];
 
         $template
             ->setPackageName('G11nTest')
@@ -74,6 +72,16 @@ class MakeTemplatesCommand extends Command
             $template->templatePath,
             $this->rootDir
         );
+
+        // Javascript
+        $template->setPaths([$this->rootDir . '/assets'])
+            ->setExtensionDir('js')
+            ->setType('js')
+            ->setTemplatePath($this->rootDir.'/translations/template.js.pot');
+
+        $g11nUtil->processTemplates($template);
+
+        $this->replaceTemplate($template->templatePath, $this->rootDir);
 
         $io->success('Templates created.');
     }

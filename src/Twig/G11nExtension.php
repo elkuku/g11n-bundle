@@ -24,6 +24,7 @@ class G11nExtension extends AbstractExtension
             new TwigFunction('getLangDebug', [$this, 'getLangDebug']),
             new TwigFunction('getLangs', [$this, 'getLangs']),
             new TwigFunction('getCurrentLang', [$this, 'getCurrentLang']),
+            new TwigFunction('getG11nJavascript', [$this, 'getG11nJavascript']),
             new TwigFunction('replaceRootPath', [$this, 'replaceRootPath']),
         ];
     }
@@ -53,6 +54,11 @@ class G11nExtension extends AbstractExtension
     public function getCurrentLang(): string
     {
         return G11n::getCurrent();
+    }
+
+    public function getG11nJavascript()
+    {
+        return G11n::getJavaScript();
     }
 
     public function replaceRootPath(string $path): string

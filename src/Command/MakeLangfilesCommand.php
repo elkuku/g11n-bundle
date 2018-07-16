@@ -57,6 +57,15 @@ class MakeLangfilesCommand extends Command
             $g11nUtil->processFiles($languageFile);
         }
 
+        // Javascript
+        $languageFile->setTemplatePath($this->rootDir.'/translations/template.js.pot')
+            ->setExtension('default.js');
+
+        foreach ($langs as $lang) {
+            $languageFile->setLang($lang);
+            $g11nUtil->processFiles($languageFile);
+        }
+
         $io->success('Language files created.');
     }
 }
