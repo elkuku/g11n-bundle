@@ -8,16 +8,16 @@
     "packages": [
         {
             "name": "elkuku/g11n",
-            "version": "5.0.1",
+            "version": "5.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/elkuku/g11n.git",
-                "reference": "bd081316011b2eab1c02d1f041cc20896d810572"
+                "reference": "808f4431fe0d760c1b37290407724ebd1853826c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elkuku/g11n/zipball/bd081316011b2eab1c02d1f041cc20896d810572",
-                "reference": "bd081316011b2eab1c02d1f041cc20896d810572",
+                "url": "https://api.github.com/repos/elkuku/g11n/zipball/808f4431fe0d760c1b37290407724ebd1853826c",
+                "reference": "808f4431fe0d760c1b37290407724ebd1853826c",
                 "shasum": ""
             },
             "require": {
@@ -48,7 +48,7 @@
                 }
             ],
             "description": "The g11n language library",
-            "time": "2018-07-11T16:55:38+00:00"
+            "time": "2018-07-19T16:11:44+00:00"
         },
         {
             "name": "elkuku/g11n-util",

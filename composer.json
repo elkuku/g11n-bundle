@@ -17,6 +17,10 @@
     "symfony/dependency-injection": "^4.1",
     "symfony/http-kernel": "^4.1"
   },
+  "require-dev": {
+    "symfony/phpunit-bridge": "^4.1",
+    "symfony/twig-bundle": "^4.1"
+  },
   "autoload": {
     "psr-4": {
       "ElKuKu\\G11nBundle\\": "src/"
@@ -26,10 +30,6 @@
     "psr-4": {
       "ElKuKu\\G11nBundle\\Tests\\": "Tests/"
     }
-  },
-  "require-dev": {
-    "symfony/phpunit-bridge": "^4.1",
-    "symfony/twig-bundle": "^4.1"
   },
   "config": {
     "sort-packages": true
